@@ -11,7 +11,7 @@ import {
 export function AppSidebar() {
   const sidebar = useSidebar();
   return (
-    <Sidebar className="flex justify-end align-bottom mt-[57px] ">
+    <Sidebar className="flex justify-end align-bottom">
       <SidebarHeader className="relative">
         <SidebarTrigger className="absolute right-3" />
       </SidebarHeader>

@@ -4,14 +4,12 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex ">
-      <NavBar />
-      <div>
-        <SidebarProvider defaultOpen={false} className="flex flex-col">
-          <AppSidebar />
-          <main>{children}</main>
-        </SidebarProvider>
+    <SidebarProvider defaultOpen={false} className="">
+      <AppSidebar />
+      <div className="flex flex-col w-full">
+        <NavBar />
+        <main>{children}</main>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }
