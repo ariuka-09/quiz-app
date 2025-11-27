@@ -1,4 +1,5 @@
 "use client";
+import { axiosInstance } from "@/app/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ChangeEventHandler, ReactEventHandler, useState } from "react";
@@ -12,7 +13,12 @@ export default function Home() {
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
-  const handleOnSubmit = () => {};
+  const handleOnSubmit = async () => {
+    await axiosInstance("/articles", {
+      title: title,
+      text: content,
+    });
+  };
   return (
     <div className="px-64 pt-12 ">
       <div>
