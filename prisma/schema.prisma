@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model articles {
+  id      Int     @id @default(autoincrement())
+  title   String? @db.VarChar(50)
+  text    String?
+  summary String?
+  quiz    String?
+  history String?
+}
+
+model departments {
+  id        Int         @id @default(autoincrement())
+  name      String?     @db.VarChar(50)
+  employees employees[]
+}
+
+model employees {
+  id           Int          @id @default(autoincrement())
+  firstname    String?      @db.VarChar(50)
+  lastname     String?      @db.VarChar(50)
+  age          Int?
+  gender       String?      @db.VarChar(10)
+  departmentid Int?
+  position     String?      @db.VarChar(100)
+  hiredate     DateTime?    @db.Date
+  departments  departments? @relation(fields: [departmentid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  salaries     salaries[]
+}
+
+model salaries {
+  id            Int        @id
+  employeeid    Int?
+  basesalary    Decimal?   @db.Decimal(10, 2)
+  bonus         Decimal?   @db.Decimal(10, 2)
+  effectivefrom DateTime?  @db.Date
+  employees     employees? @relation(fields: [employeeid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model test {
+  name String? @db.VarChar(50)
+  age  Int?
+
+  @@ignore
+}

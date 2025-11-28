@@ -1,11 +1,12 @@
 import { query } from "@/app/lib/connectDb";
+import prisma from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 import { title } from "process";
 
 export const GET = async () => {
   try {
-    const res = await query("SELECT * FROM articles");
-    return NextResponse.json(res.rows);
+    const res = await prisma.articles.findMany();
+    return NextResponse.json(res);
   } catch (error) {
     console.log(error);
 
@@ -13,13 +14,17 @@ export const GET = async () => {
   }
 };
 export const POST = async (req: any) => {
-  const { title, text } = req;
+  const { title, text, summary, quiz } = await req.json();
   try {
-    const res = await query(`INSERT INTO article(title, text) VALUES($1, $2)`, [
-      title,
-      text,
-    ]);
-    return NextResponse.json(res);
+    const resp = await prisma.articles.create({
+      data: {
+        title: title,
+        text: text,
+        summary: summary,
+        quiz: quiz,
+      },
+    });
+    return NextResponse.json(resp);
   } catch (error) {
     return NextResponse.json(error);
   }
