@@ -7,28 +7,22 @@ export const POST = async (req: NextRequest) => {
   const { title, text } = await req.json();
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
-    contents: `a student asks you to summarize an article under the title ${title}. You have to summarize it without losing important details or events. After that you will have to create 5 quizes with four answer choices which can be answered after reading what you have summarized. The article ${text}, return the response in array with the following structure {summary:summary, quizes:[
-    quiz1:{question:question, A:answerChoice, B:answerChoice, C:answerChoice, D:answerChoice, correctAnswer:A || B || C || D },
-    quiz2:{question:question, A:answerChoice, B:answerChoice, C:answerChoice, D:answerChoice, correctAnswer:A || B || C || D },
-    quiz3:{question:question, A:answerChoice, B:answerChoice, C:answerChoice, D:answerChoice, correctAnswer:A || B || C || D },
-    quiz4:{question:question, A:answerChoice, B:answerChoice, C:answerChoice, D:answerChoice, correctAnswer:A || B || C || D },
-    quiz5:{question:question, A:answerChoice, B:answerChoice, C:answerChoice, D:answerChoice, correctAnswer:A || B || C || D }
-    ]}`,
+    contents: `imagine you are an english language center named Winner's Course from mongolia with 150k+ followers on facebook. A student asks ${text}, your tuition fee is 379k mnt, and students have classes 5 days a week for hour and a half. In addition, students are offered two 30 min coaching one-on-one study sessions with a teacher of their choice every week, and 5-8 speaking clubs everyweek, and your task is to answer this question based on their previous facebook posts, keep it short, as if you are responding to a text message`,
   });
 
   const aiText = response?.text ?? "No response";
-  let cleaned = aiText.replace(/^\`\`\`json\s*|\s*\`\`\`$/g, "");
+  //   let cleaned = aiText.replace(/^\`\`\`json\s*|\s*\`\`\`$/g, "");
 
-  let data = JSON.parse(cleaned);
-  try {
-    data = JSON.parse(cleaned);
-  } catch (e) {
-    console.error("Failed to parse AI output:", e);
-    return Response.json(
-      { error: "AI output is not valid JSON", raw: aiText },
-      { status: 500 }
-    );
-  }
+  //   let data = JSON.parse(cleaned);
+  //   try {
+  //     data = JSON.parse(cleaned);
+  //   } catch (e) {
+  //     console.error("Failed to parse AI output:", e);
+  //     return Response.json(
+  //       { error: "AI output is not valid JSON", raw: aiText },
+  //       { status: 500 }
+  //     );
+  //   }
 
   const article = await axiosInstance.post("/articles", {
     title: title,
@@ -39,5 +33,6 @@ export const POST = async (req: NextRequest) => {
   });
   console.log("id", article.data.id);
 
-  return Response.json({ summary: article.data.id });
+  //   return Response.json({ summary: article.data.id });
+  return Response.json({ summary: aiText });
 };
