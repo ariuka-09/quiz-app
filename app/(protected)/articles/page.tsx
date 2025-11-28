@@ -22,7 +22,7 @@ export default function Home() {
       text: content,
     });
     // const text = response.data.summary;
-    console.log("should be id", response.data.summary);
+    console.log("should be hariult", response.data.summary);
 
     // router.push("/articles/summary");
   };
