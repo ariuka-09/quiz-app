@@ -21,10 +21,10 @@ export default function Home() {
       title: title,
       text: content,
     });
-    // const text = response.data.summary;
-    console.log("should be id", response.data.summary);
+    const id = response.data.summary;
+    console.log("should be id", id);
 
-    // router.push("/articles/summary");
+    router.push(`/articles/summary/${id}`);
   };
   return (
     <div className="px-64 pt-12 ">

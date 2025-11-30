@@ -35,6 +35,7 @@ export const POST = async (req: NextRequest) => {
     text: text,
     summary: data.summary,
     quiz: JSON.stringify(data.quizes),
+    history: title,
   });
   console.log("id", article.data.id);
 
