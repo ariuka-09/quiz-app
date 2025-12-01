@@ -5,10 +5,13 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider defaultOpen={false} className="">
-      <AppSidebar />
-      <div className="flex flex-col w-full">
+      <div className="flex w-full flex-col">
         <NavBar />
-        <main>{children}</main>
+
+        <div className="">
+          <AppSidebar />
+          <main>{children}</main>
+        </div>
       </div>
     </SidebarProvider>
   );

@@ -10,31 +10,34 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { QuizCard } from "./components/QuizCard";
 
 export default function Home({ params }: { params: { id: string } }) {
   const resolvedParams: { id: string } = React.use(params); // unwrap
   const { id } = resolvedParams;
   const correctedId = Number(id) - 1;
   const stringId = String(correctedId);
-  const [summary, setSummary] = useState({});
+  const [quizes, setQuizes] = useState([]);
 
+  const getQuizes = async () => {
+    const data = await axiosInstance.get("/articles");
+    const filteredData = data.data.filter((article) => {
+      return article.id == id;
+    });
+    setQuizes(JSON.parse(filteredData[0].quiz) || "[]");
+
+    console.log("data", filteredData[0].quiz);
+  };
   useEffect(() => {
-    const getSummary = async () => {
-      const data = await axiosInstance.get("/articles");
-      const summary = data.data.filter((article) => {
-        return article.id == id;
-      });
-
-      setSummary({ summary: summary[0].summary, title: summary[0].title });
-    };
-    getSummary();
+    getQuizes();
+    console.log("quiz", quizes);
   }, []);
   const router = useRouter();
-  const handleTakeQuiz = () => {
-    router.push(`/articles/quiz/${id}`);
-  };
+  //   const handleTakeQuiz = () => {
+  //     router.push(`/articles/quiz/${id}`);
+  //   };
   return (
-    <div className="mx-64 mt-12 flex flex-col gap-5 border-b border w-fit p-7 rounded-lg">
+    <div className="mx-64 mt-26 flex flex-col gap-5 border-b border w-fit p-7 rounded-lg">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-5">
           <p className="flex text-[24px] font-semibold gap-2">
@@ -54,34 +57,17 @@ export default function Home({ params }: { params: { id: string } }) {
                 strokeLinejoin="round"
               />
             </svg>
-            Article Quiz Generator
+            Quick test
           </p>
           <p className="text-[14px] font-semibold text-[#737373] flex items-center gap-2 ">
-            <svg
-              width="15"
-              height="13"
-              viewBox="0 0 15 13"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.16667 3.16667C7.16667 2.45942 6.88571 1.78115 6.38562 1.28105C5.88552 0.780951 5.20724 0.5 4.5 0.5H0.5V10.5H5.16667C5.6971 10.5 6.20581 10.7107 6.58088 11.0858C6.95595 11.4609 7.16667 11.9696 7.16667 12.5M7.16667 3.16667V12.5M7.16667 3.16667C7.16667 2.45942 7.44762 1.78115 7.94771 1.28105C8.44781 0.780951 9.12609 0.5 9.83333 0.5H13.8333V10.5H9.16667C8.63623 10.5 8.12753 10.7107 7.75245 11.0858C7.37738 11.4609 7.16667 11.9696 7.16667 12.5"
-                stroke="#09090B"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Summarized content
+            Take a quick test about your knowledge from your content
           </p>
         </div>
-        <div>
-          <p className="text-[24px] font-semibold">{summary.title} </p>
-          <p className="text-[14px] font-normal">{summary.summary} </p>
-        </div>
       </div>
-      <div className="flex justify-between">
-        <Button variant="outline">See content</Button>
-        <Button onClick={handleTakeQuiz}>Take a quiz</Button>
+      <div className="flex flex-col gap-10">
+        {quizes.map((quiz) => {
+          return <QuizCard quiz={quiz} />;
+        })}
       </div>
     </div>
   );

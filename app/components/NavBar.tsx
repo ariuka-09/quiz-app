@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 export const NavBar = () => {
   return (
-    <div className="h-14 flex justify-between w-full items-center  border-b">
+    <div className="h-14 flex justify-between w-full items-center  border-b fixed bg-white">
       <p className="text-[24px] font-semibold ">Quiz app</p>
       {/* <Avatar>
         <AvatarImage
