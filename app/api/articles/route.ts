@@ -14,7 +14,7 @@ export const GET = async () => {
   }
 };
 export const POST = async (req: any) => {
-  const { title, text, summary, quiz } = await req.json();
+  const { title, text, summary, quiz, history } = await req.json();
   try {
     const resp = await prisma.articles.create({
       data: {
@@ -22,6 +22,7 @@ export const POST = async (req: any) => {
         text: text,
         summary: summary,
         quiz: quiz,
+        history: history,
       },
     });
     return NextResponse.json(resp);
