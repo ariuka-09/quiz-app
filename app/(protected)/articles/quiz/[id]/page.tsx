@@ -1,43 +1,42 @@
 "use client";
 import { axiosInstance } from "@/app/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { NextResponse } from "next/server";
-import React, {
-  ChangeEventHandler,
-  ReactEventHandler,
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 import { QuizCard } from "./components/QuizCard";
+import { quiz } from "@/app/lib/type";
 
 export default function Home({ params }: { params: { id: string } }) {
-  const resolvedParams: { id: string } = React.use(params); // unwrap
-  const { id } = resolvedParams;
-  const correctedId = Number(id) - 1;
-  const stringId = String(correctedId);
+  const { id } = params;
   const [quizes, setQuizes] = useState([]);
   const [qIndex, setQIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
+  const [attempt, setAttempt] = useState([]);
+  const router = useRouter();
+
+  const quizSubmitHandle = async () => {
+    await axiosInstance.patch("/quizCrud", { attempt });
+  };
+  useEffect(() => {
+    if (qIndex == 5) {
+      router.push(`/articles/result/${id}`);
+      quizSubmitHandle();
+    }
+  }, [qIndex]);
 
   const getQuizes = async () => {
     const data = await axiosInstance.get("/quizCrud");
-
-    const filteredData = data.data.filter((quiz) => {
+    const filteredData = data.data.filter((quiz: quiz) => {
       return quiz.articleid == id;
     });
     console.log("data", filteredData);
     setQuizes(filteredData || "[]");
   };
+
   useEffect(() => {
     getQuizes();
     console.log("correctCount", correctCount);
-  }, [correctCount]);
-  const router = useRouter();
-  //   const handleTakeQuiz = () => {
-  //     router.push(`/articles/quiz/${id}`);
-  //   };
+  }, []);
+
   return (
     <div className="mx-64 mt-26 flex flex-col gap-5 border-b border w-fit p-7 rounded-lg ">
       <div className="flex flex-col gap-2">
@@ -67,12 +66,13 @@ export default function Home({ params }: { params: { id: string } }) {
         </div>
       </div>
       <div className="flex flex-col gap-10 w-full">
-        {quizes.length > 0 && (
+        {quizes.length > 0 && qIndex != 5 && (
           <QuizCard
             quiz={quizes[qIndex]}
             setQIndex={setQIndex}
             setCorrectCount={setCorrectCount}
             qIndex={qIndex}
+            setAttempt={setAttempt}
           />
         )}
       </div>

@@ -12,9 +12,7 @@ export default function Home() {
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
   };
-  const [content, setContent] = useState(
-    "Technology has changed the world in ways that were once unimaginable it affects how we communicate learn work and even think in the past people relied on letters and face to face meetings now messages travel across the world instantly social media allows people to share their lives and ideas in real time and information is available at the touch of a button this has made the world smaller and connected people from different cultures and backgrounds it also makes collaboration easier for businesses students and communities although technology brings convenience and speed it also creates challenges many people spend too much time on screens which can lead to isolation and distraction information overload makes it hard to focus and privacy is constantly at risk because data is collected stored and shared without much control yet despite these problems technology has brought remarkable benefits in healthcare doctors can diagnose and treat patients remotely wearable devices monitor health and AI helps predict illnesses education has been transformed online courses and digital resources let anyone learn from anywhere renewable energy electric cars and smart systems promise solutions for global problems technology shapes our lives every day it changes how we think act and interact we must learn to use it wisely balancing the advantages with the risks so that the future can be bright and connected for everyone"
-  );
+  const [content, setContent] = useState("");
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
