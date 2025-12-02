@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async () => {
   try {
-    const quizzes = prisma.quiz.findMany();
+    const quizzes = await prisma.quiz.findMany();
     return NextResponse.json(quizzes);
   } catch (error) {
     return NextResponse.json(error);
@@ -23,7 +23,7 @@ export const POST = async (req: NextRequest) => {
         articleid: id,
       },
     });
-    return NextResponse.json(res);
+    return NextResponse.json(res.id);
   } catch (error) {
     return NextResponse.json(error);
   }

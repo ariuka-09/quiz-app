@@ -22,17 +22,16 @@ export default function Home({ params }: { params: { id: string } }) {
   const [correctCount, setCorrectCount] = useState(0);
 
   const getQuizes = async () => {
-    const data = await axiosInstance.get("/article");
-    const filteredData = data.data.filter((article) => {
-      return article.id == id;
-    });
-    setQuizes(JSON.parse(filteredData[0].quiz) || "[]");
+    const data = await axiosInstance.get("/quizCrud");
 
-    console.log("data", filteredData[0].quiz);
+    const filteredData = data.data.filter((quiz) => {
+      return quiz.articleid == id;
+    });
+    console.log("data", filteredData);
+    setQuizes(filteredData || "[]");
   };
   useEffect(() => {
     getQuizes();
-    console.log("quiz", quizes);
     console.log("correctCount", correctCount);
   }, [correctCount]);
   const router = useRouter();
@@ -40,7 +39,7 @@ export default function Home({ params }: { params: { id: string } }) {
   //     router.push(`/articles/quiz/${id}`);
   //   };
   return (
-    <div className="mx-64 mt-26 flex flex-col gap-5 border-b border w-fit p-7 rounded-lg">
+    <div className="mx-64 mt-26 flex flex-col gap-5 border-b border w-fit p-7 rounded-lg ">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-5">
           <p className="flex text-[24px] font-semibold gap-2">
@@ -67,7 +66,7 @@ export default function Home({ params }: { params: { id: string } }) {
           </p>
         </div>
       </div>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 w-full">
         {quizes.length > 0 && (
           <QuizCard
             quiz={quizes[qIndex]}

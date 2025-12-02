@@ -21,7 +21,7 @@ export default function Home({ params }: { params: { id: string } }) {
   useEffect(() => {
     const getSummary = async () => {
       const data = await axiosInstance.get("/article");
-      const summary = data.data.filter((article) => {
+      const summary = data.data.filter((article: any) => {
         return article.id == id;
       });
 
@@ -41,15 +41,15 @@ export default function Home({ params }: { params: { id: string } }) {
     for (let i = 0; i < quizzes.length; i++) {
       console.log("test", quizzes[i]);
 
-      await axiosInstance.post("/addQuiz", {
+      const quizId = await axiosInstance.post("/quizCrud", {
         question: quizzes[i].question,
         options: quizzes[i].options,
         answer: quizzes[i].answer,
         id: id,
       });
+      console.log("id", quizId);
     }
 
-    console.log("quizzes", quizzes);
     router.push(`/articles/quiz/${id}`);
   };
   return (

@@ -9,10 +9,10 @@ export function QuizCard(props: {
   setCorrectCount: any;
   qIndex: any;
 }) {
-  const { question, A, B, C, D, correctAnswer } = props.quiz;
+  const { question, options, answer } = props.quiz;
   const { setQIndex, setCorrectCount, qIndex } = props;
-  const ansCheck = (answer: string) => {
-    if (answer == correctAnswer) {
+  const ansCheck = (ans: string) => {
+    if (ans == answer) {
       console.log("true");
       setCorrectCount((prev: any) => prev + 1);
     }
@@ -39,43 +39,23 @@ export function QuizCard(props: {
           <span className="text-[#737373] ">/ 5</span>
         </p>
       </div>
-      <div className="grid grid-cols-2 grid-rows-2 gap-3 ">
-        <Button
-          variant="outline"
-          onClick={() => {
-            setQIndex((prev: string) => prev + 1);
-            ansCheck("A");
-          }}
-        >
-          {A}
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => {
-            setQIndex((prev: string) => prev + 1);
-            ansCheck("B");
-          }}
-        >
-          {B}
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => {
-            setQIndex((prev: string) => prev + 1);
-            ansCheck("C");
-          }}
-        >
-          {C}
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => {
-            setQIndex((prev: string) => prev + 1);
-            ansCheck("D");
-          }}
-        >
-          {D}
-        </Button>
+      <div className="grid grid-cols-2 gap-3 ">
+        {options.length > 0 &&
+          options.map((option, i) => {
+            return (
+              <Button
+                key={i}
+                className="w-full"
+                variant="outline"
+                onClick={() => {
+                  setQIndex((prev: string) => prev + 1);
+                  ansCheck(i + 1);
+                }}
+              >
+                {option}
+              </Button>
+            );
+          })}
       </div>
     </div>
   );
