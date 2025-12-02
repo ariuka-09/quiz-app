@@ -18,9 +18,11 @@ export default function Home({ params }: { params: { id: string } }) {
   const correctedId = Number(id) - 1;
   const stringId = String(correctedId);
   const [quizes, setQuizes] = useState([]);
+  const [qIndex, setQIndex] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
 
   const getQuizes = async () => {
-    const data = await axiosInstance.get("/articles");
+    const data = await axiosInstance.get("/article");
     const filteredData = data.data.filter((article) => {
       return article.id == id;
     });
@@ -31,7 +33,8 @@ export default function Home({ params }: { params: { id: string } }) {
   useEffect(() => {
     getQuizes();
     console.log("quiz", quizes);
-  }, []);
+    console.log("correctCount", correctCount);
+  }, [correctCount]);
   const router = useRouter();
   //   const handleTakeQuiz = () => {
   //     router.push(`/articles/quiz/${id}`);
@@ -65,9 +68,14 @@ export default function Home({ params }: { params: { id: string } }) {
         </div>
       </div>
       <div className="flex flex-col gap-10">
-        {quizes.map((quiz) => {
-          return <QuizCard quiz={quiz} />;
-        })}
+        {quizes.length > 0 && (
+          <QuizCard
+            quiz={quizes[qIndex]}
+            setQIndex={setQIndex}
+            setCorrectCount={setCorrectCount}
+            qIndex={qIndex}
+          />
+        )}
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export default function Home({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     const getSummary = async () => {
-      const data = await axiosInstance.get("/articles");
+      const data = await axiosInstance.get("/article");
       const summary = data.data.filter((article) => {
         return article.id == id;
       });
@@ -30,7 +30,26 @@ export default function Home({ params }: { params: { id: string } }) {
     getSummary();
   }, []);
   const router = useRouter();
-  const handleTakeQuiz = () => {
+  const handleTakeQuiz = async () => {
+    const response = await axiosInstance.post("/quiz", {
+      content: summary.summary,
+    });
+
+    const quizzes = await response.data.quizzes;
+    console.log("checking quizzes", quizzes[0]);
+    console.log("checking response", response);
+    for (let i = 0; i < quizzes.length; i++) {
+      console.log("test", quizzes[i]);
+
+      await axiosInstance.post("/addQuiz", {
+        question: quizzes[i].question,
+        options: quizzes[i].options,
+        answer: quizzes[i].answer,
+        id: id,
+      });
+    }
+
+    console.log("quizzes", quizzes);
     router.push(`/articles/quiz/${id}`);
   };
   return (
