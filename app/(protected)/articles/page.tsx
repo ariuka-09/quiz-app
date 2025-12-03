@@ -2,17 +2,33 @@
 import { axiosInstance } from "@/app/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { NextResponse } from "next/server";
-import { ChangeEventHandler, ReactEventHandler, useState } from "react";
+import {
+  ChangeEventHandler,
+  ReactEventHandler,
+  useEffect,
+  useState,
+} from "react";
 
 export default function Home() {
   const router = useRouter();
   const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const { isLoaded, isSignedIn, userId } = useAuth();
+  useEffect(() => {
+    console.log("user", userId);
+
+    if (!isSignedIn && isLoaded) {
+      router.push("/sign-in");
+    }
+  }, [isLoaded]);
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
   };
-  const [content, setContent] = useState("");
+
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
@@ -99,9 +115,15 @@ export default function Home() {
           placeholder="Type your message here."
         />
         <div className="flex justify-end">
-          <Button className="w-fit " onClick={handleOnSubmit}>
-            Generate summary
-          </Button>
+          {content.trim() && title.trim() ? (
+            <Button className="w-fit " onClick={handleOnSubmit}>
+              Generate summary
+            </Button>
+          ) : (
+            <Button className="w-fit " disabled={true}>
+              Generate summary
+            </Button>
+          )}
         </div>
       </div>
     </div>

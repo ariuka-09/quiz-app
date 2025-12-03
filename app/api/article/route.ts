@@ -4,8 +4,15 @@ import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async () => {
+  const { userId } = await auth();
   try {
-    const res = await prisma.article.findMany();
+    const res = await prisma.article.findMany({
+      where: {
+        userid: userId,
+      },
+    });
+    console.log("filtered history", res);
+
     return NextResponse.json(res);
   } catch (error) {
     return NextResponse.json(error);
@@ -36,6 +43,6 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const PATCH = async (req: NextRequest) => {
-  const { attempt } = await req.json();
-  const { givenAnswer, quizId } = attempt;
+  const { attempt } = req.json();
+  const res = await prisma.quiz.update();
 };

@@ -41,9 +41,9 @@ export function AppSidebar() {
       {sidebar?.state == "expanded" && (
         <SidebarContent>
           <div className="flex flex-col gap-">
-            {history?.map((e) => {
+            {history?.map((e, i) => {
               return (
-                <div>
+                <div key={i}>
                   {e.title && (
                     <div
                       onClick={() => {

@@ -18,8 +18,10 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
     summary: "",
     title: "",
   });
+  const router = useRouter();
 
   useEffect(() => {
+    // window.location.reload();
     const getSummary = async () => {
       const data = await axiosInstance.get("/article");
       const summary = data.data.filter((article: any) => {
@@ -30,7 +32,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
     };
     getSummary();
   }, []);
-  const router = useRouter();
+
   const handleTakeQuiz = async () => {
     const response = await axiosInstance.post("/quiz", {
       content: summary.summary,
