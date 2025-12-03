@@ -14,7 +14,7 @@ export default function Home({ params }: { params: { id: string } }) {
   const router = useRouter();
 
   const quizSubmitHandle = async () => {
-    await axiosInstance.patch("/quizCrud", { attempt });
+    await axiosInstance.put("/quizCrud", { attempt });
   };
   useEffect(() => {
     if (qIndex == 5) {

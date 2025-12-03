@@ -7,16 +7,17 @@ import { NextResponse } from "next/server";
 import React, {
   ChangeEventHandler,
   ReactEventHandler,
+  use,
   useEffect,
   useState,
 } from "react";
 
-export default function Home({ params }: { params: { id: string } }) {
-  const resolvedParams: { id: string } = React.use(params); // unwrap
-  const { id } = resolvedParams;
-  const correctedId = Number(id) - 1;
-  const stringId = String(correctedId);
-  const [summary, setSummary] = useState({});
+export default function Home({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const [summary, setSummary] = useState({
+    summary: "",
+    title: "",
+  });
 
   useEffect(() => {
     const getSummary = async () => {

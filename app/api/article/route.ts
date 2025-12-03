@@ -36,5 +36,6 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const PATCH = async (req: NextRequest) => {
-  const { attempt } = req.json();
+  const { attempt } = await req.json();
+  const { givenAnswer, quizId } = attempt;
 };

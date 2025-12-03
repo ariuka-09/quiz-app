@@ -28,3 +28,25 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(error);
   }
 };
+export const PUT = async (req: NextRequest) => {
+  const { attempt } = await req.json();
+  console.log("attempt", attempt);
+  try {
+    for (let i = 0; i < attempt.length; i++) {
+      const { givenAns, quizId } = attempt[i];
+      console.log("givenAns", typeof givenAns, "QuizId", quizId);
+
+      await prisma.quiz.update({
+        where: { id: quizId },
+        data: {
+          quizattempts: {
+            push: String(givenAns),
+          },
+        },
+      });
+    }
+    return NextResponse.json({ message: "all quiz attempt updated" });
+  } catch (error) {
+    return NextResponse.json({ message: error }, { status: 500 });
+  }
+};

@@ -8,7 +8,7 @@ export function QuizCard(props: {
   qIndex: any;
   setAttempt: any;
 }) {
-  const { question, options, answer } = props.quiz;
+  const { question, options, answer, id } = props.quiz;
   const { setQIndex, setCorrectCount, qIndex, setAttempt } = props;
   const ansCheck = (ans: string) => {
     if (ans == answer) {
@@ -27,7 +27,7 @@ export function QuizCard(props: {
       </div>
       <div className="grid grid-cols-2 gap-3 ">
         {options.length > 0 &&
-          options.map((option, i) => {
+          options.map((option: string, i: number) => {
             return (
               <Button
                 key={i}
@@ -35,9 +35,9 @@ export function QuizCard(props: {
                 variant="outline"
                 onClick={() => {
                   setQIndex((prev: string) => prev + 1);
-                  ansCheck(i + 1);
-                  setAttempt((prev) => {
-                    return [...prev, i + 1];
+                  ansCheck(String(i + 1));
+                  setAttempt((prev: { givenAns: string; quizId: number }[]) => {
+                    return [...prev, { givenAns: i + 1, quizId: id }];
                   });
                 }}
               >
