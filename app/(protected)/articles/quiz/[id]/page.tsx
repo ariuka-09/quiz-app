@@ -24,12 +24,10 @@ export default function Home({ params }: { params: { id: string } }) {
   }, [qIndex]);
 
   const getQuizes = async () => {
-    const data = await axiosInstance.get("/quizCrud");
-    const filteredData = data.data.filter((quiz: quiz) => {
-      return quiz.articleid == id;
-    });
-    console.log("data", filteredData);
-    setQuizes(filteredData || "[]");
+    const data = await axiosInstance.get("/quizCrud", { params: { id } });
+    console.log("axiosed data", data);
+    console.log("data", data.data);
+    setQuizes(data.data ?? []);
   };
 
   useEffect(() => {

@@ -7,3 +7,10 @@ export type quiz = {
   quizattempts: string[];
   userscores: string;
 };
+export type article = {
+  id?: number;
+  title?: string;
+  content?: string;
+  summary?: string;
+  userid?: number;
+};

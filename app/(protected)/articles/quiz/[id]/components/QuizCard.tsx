@@ -35,10 +35,17 @@ export function QuizCard(props: {
                 variant="outline"
                 onClick={() => {
                   setQIndex((prev: string) => prev + 1);
-                  ansCheck(String(i + 1));
-                  setAttempt((prev: { givenAns: string; quizId: number }[]) => {
-                    return [...prev, { givenAns: i + 1, quizId: id }];
-                  });
+                  ansCheck(String(i));
+                  setAttempt(
+                    (
+                      prev: {
+                        givenAns: string;
+                        quizId: number;
+                      }[]
+                    ) => {
+                      return [...prev, { givenAns: i, quizId: id }];
+                    }
+                  );
                 }}
               >
                 {option}

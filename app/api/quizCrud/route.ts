@@ -1,12 +1,27 @@
 import prisma from "@/app/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { use } from "react";
 
-export const GET = async () => {
-  try {
-    const quizzes = await prisma.quiz.findMany();
-    return NextResponse.json(quizzes);
-  } catch (error) {
-    return NextResponse.json(error);
+export const GET = async (req: NextRequest) => {
+  const id = req.nextUrl.searchParams.get("id");
+  if (!id) {
+    try {
+      const quizzes = await prisma.quiz.findMany();
+      return NextResponse.json(quizzes);
+    } catch (error) {
+      return NextResponse.json(error);
+    }
+  } else {
+    try {
+      const quizzes = await prisma.quiz.findMany({
+        where: {
+          articleid: id,
+        },
+      });
+      return NextResponse.json(quizzes);
+    } catch (error) {
+      return NextResponse.json(error);
+    }
   }
 };
 
