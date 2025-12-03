@@ -6,19 +6,29 @@ export const GET = async (req: NextRequest) => {
   const id = req.nextUrl.searchParams.get("id");
   if (!id) {
     try {
-      const quizzes = await prisma.quiz.findMany();
+      const quizzes = await prisma.quiz.findMany({
+        orderBy: {
+          id: "asc",
+        },
+      });
       return NextResponse.json(quizzes);
     } catch (error) {
       return NextResponse.json(error);
     }
   } else {
     try {
+      console.log("quizCrud working");
+
       const quizzes = await prisma.quiz.findMany({
         where: {
           articleid: id,
         },
+        orderBy: {
+          id: "asc",
+        },
       });
-      return NextResponse.json(quizzes);
+      const lastFive = quizzes.slice(-5);
+      return NextResponse.json(lastFive);
     } catch (error) {
       return NextResponse.json(error);
     }
