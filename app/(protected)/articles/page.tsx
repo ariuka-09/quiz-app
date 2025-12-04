@@ -43,7 +43,7 @@ export default function Home() {
     router.push(`/articles/summary/${id}`);
   };
   return (
-    <div className="mx-64 mt-26 flex flex-col gap-5 border border-b rounded-lg p-7">
+    <div className=" mx-[10%] flex flex-col gap-5 border border-b rounded-lg p-7">
       <div className="flex flex-col gap-5">
         <p className="flex text-[24px] font-semibold gap-2">
           {" "}

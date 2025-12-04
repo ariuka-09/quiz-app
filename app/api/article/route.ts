@@ -41,8 +41,3 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(error);
   }
 };
-
-export const PATCH = async (req: NextRequest) => {
-  const { attempt } = req.json();
-  const res = await prisma.quiz.update();
-};

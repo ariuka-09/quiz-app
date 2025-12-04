@@ -12,6 +12,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { ClipLoader } from "react-spinners";
 
 export default function Home({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -20,6 +21,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
     title: "",
   });
   const [loading, setLoading] = useState(false);
+  const [quizLoading, setQuizLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
   }, []);
 
   const handleTakeQuiz = async () => {
+    setQuizLoading(true);
     const response = await axiosInstance.post("/quiz", {
       content: summary.summary,
     });
@@ -58,9 +61,10 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
     }
 
     router.push(`/articles/quiz/${id}`);
+    setQuizLoading(false);
   };
   return (
-    <div className="mx-64 mt-12 flex flex-col gap-5 border-b border w-fit p-7 rounded-lg">
+    <div className=" mx-[10%] flex flex-col gap-5 border-b border w-fit p-7 rounded-lg">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-5">
           <p className="flex text-[24px] font-semibold gap-2">
@@ -101,7 +105,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
           </p>
         </div>
         {loading ? (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-5">
             <Skeleton className="h-6 w-250 " />
             <Skeleton className="h-30 w-250 " />
           </div>
@@ -114,7 +118,11 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
       </div>
       <div className="flex justify-between">
         <Button variant="outline">See content</Button>
-        <Button onClick={handleTakeQuiz}>Take a quiz</Button>
+        {!quizLoading ? (
+          <Button onClick={handleTakeQuiz}>Take a quiz</Button>
+        ) : (
+          <ClipLoader color="#1d4ed8" size={35} loading={quizLoading} />
+        )}
       </div>
     </div>
   );

@@ -37,7 +37,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
     getResults();
   }, []);
   return (
-    <div className="my-30 mx-[30%] flex flex-col gap-6">
+    <div className="mx-[10%] flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <p className="font-semibold text-2xl flex items-center gap-2">
           {" "}
@@ -189,8 +189,8 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
                   <path
                     d="M12.6663 14L7.99967 11.3333L3.33301 14V3.33333C3.33301 2.97971 3.47348 2.64057 3.72353 2.39052C3.97358 2.14048 4.31272 2 4.66634 2H11.333C11.6866 2 12.0258 2.14048 12.2758 2.39052C12.5259 2.64057 12.6663 2.97971 12.6663 3.33333V14Z"
                     stroke="#FAFAFA"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
                 Save and leave

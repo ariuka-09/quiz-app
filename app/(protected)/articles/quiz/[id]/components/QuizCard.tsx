@@ -17,7 +17,7 @@ export function QuizCard(props: {
     }
   };
   return (
-    <div>
+    <div className="">
       <div className="flex justify-between">
         <p>{question} </p>
         <p className="flex items-center gap-1">

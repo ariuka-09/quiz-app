@@ -49,7 +49,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
   }, [id]);
 
   return (
-    <div className="mx-64 mt-26 flex flex-col gap-5 border-b border w-fit p-7 rounded-lg ">
+    <div className="mx-[10%] flex flex-col gap-5 border-b border p-7 rounded-lg ">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-5">
           <p className="flex text-[24px] font-semibold gap-2">

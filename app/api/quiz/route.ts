@@ -7,7 +7,7 @@ export const POST = async (req: NextRequest) => {
   const { title, content } = await req.json();
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
-    contents: `Generate 5 multiple choice questions based on this article: ${content}. Return the response in this exact JSON format:
+    contents: `Generate 5 multiple choice questions based on this article: ${content}, keep the answers short. Return the response in this exact JSON format:
       [
         {
           "question": "Question text here",
