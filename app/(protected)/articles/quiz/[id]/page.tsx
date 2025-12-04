@@ -28,8 +28,8 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
   }, [params]);
   useEffect(() => {
     if (qIndex == 5) {
-      router.push(`/articles/result/${id}`);
       quizSubmitHandle();
+      router.push(`/articles/result/${id}`);
     }
   }, [qIndex]);
 
