@@ -72,7 +72,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
             <div className="flex flex-col gap-3">
               {results.map((result, i: number) => {
                 return (
-                  <div className="flex gap-3">
+                  <div className="flex gap-3" key={i}>
                     <div>
                       {result.quizattempts[result.quizattempts.length - 1] ==
                       result.answer ? (
