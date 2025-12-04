@@ -3,19 +3,29 @@ import { axiosInstance } from "@/app/lib/utils";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { QuizCard } from "./components/QuizCard";
-import { quiz } from "@/app/lib/type";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function Home({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default function Home({ params }: { params: Promise<{ id: string }> }) {
   const [quizes, setQuizes] = useState([]);
   const [qIndex, setQIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [attempt, setAttempt] = useState([]);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [id, setId] = useState<string | undefined>();
 
   const quizSubmitHandle = async () => {
     await axiosInstance.put("/quizCrud", { attempt });
   };
+  useEffect(() => {
+    const doSomething = async () => {
+      const { id } = await params;
+      if (id) {
+        setId(id);
+      }
+    };
+    doSomething();
+  }, [params]);
   useEffect(() => {
     if (qIndex == 5) {
       router.push(`/articles/result/${id}`);
@@ -28,12 +38,15 @@ export default function Home({ params }: { params: { id: string } }) {
     console.log("axiosed data", data);
     console.log("data", data.data);
     setQuizes(data.data ?? []);
+    setLoading(false);
   };
 
   useEffect(() => {
-    getQuizes();
-    console.log("correctCount", correctCount);
-  }, []);
+    setLoading(true);
+    if (id) {
+      getQuizes();
+    }
+  }, [id]);
 
   return (
     <div className="mx-64 mt-26 flex flex-col gap-5 border-b border w-fit p-7 rounded-lg ">
@@ -63,17 +76,30 @@ export default function Home({ params }: { params: { id: string } }) {
           </p>
         </div>
       </div>
-      <div className="flex flex-col gap-10 w-full">
-        {quizes.length > 0 && qIndex != 5 && (
-          <QuizCard
-            quiz={quizes[qIndex]}
-            setQIndex={setQIndex}
-            setCorrectCount={setCorrectCount}
-            qIndex={qIndex}
-            setAttempt={setAttempt}
-          />
-        )}
-      </div>
+      {!loading ? (
+        <div className="flex flex-col gap-10 w-full">
+          {quizes.length > 0 && qIndex != 5 && (
+            <QuizCard
+              quiz={quizes[qIndex]}
+              setQIndex={setQIndex}
+              setCorrectCount={setCorrectCount}
+              qIndex={qIndex}
+              setAttempt={setAttempt}
+            />
+          )}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          <Skeleton className="w-110 h-6" />
+
+          <div className="grid grid-cols-2 grid-rows-2 gap-2 w-full">
+            <Skeleton className="w-55 h-6" />
+            <Skeleton className="w-55 h-6" />
+            <Skeleton className="w-55 h-6" />
+            <Skeleton className="w-55 h-6" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

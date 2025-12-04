@@ -44,7 +44,7 @@ export default function Home() {
   };
   return (
     <div className="mx-64 mt-26 flex flex-col gap-5 border border-b rounded-lg p-7">
-      <div className="flex flex-col gap-5">
+      {/* <div className="flex flex-col gap-5">
         <p className="flex text-[24px] font-semibold gap-2">
           {" "}
           <svg
@@ -86,12 +86,7 @@ export default function Home() {
           </svg>
           Article Title
         </p>
-        <Textarea
-          value={title}
-          onChange={handleTitleChange}
-          className="min-h-2 overflow-y-auto resize-none"
-          placeholder="Type your message here."
-        />
+        <Textarea />
       </div>
       <div className="flex flex-col gap-5  ">
         <p className="flex gap-1 items-center text-[#71717A] font-semibold text-[14px] ">
@@ -109,31 +104,14 @@ export default function Home() {
           </svg>
           Article Content
         </p>
-        <Textarea
-          value={content}
-          onChange={handleContentChange}
-          placeholder="Type your message here."
-        />
+        <Textarea />
         <div className="flex justify-end">
-          {isLoaded ? (
-            <div>
-              {content.trim() && title.trim() ? (
-                <Button className="w-fit " onClick={handleOnSubmit}>
-                  Generate summary
-                </Button>
-              ) : (
-                <Button className="w-fit " disabled={true}>
-                  Generate summary
-                </Button>
-              )}
-            </div>
-          ) : (
-            <div>
-              <Button variant="destructive">Loading </Button>
-            </div>
-          )}
+          <div>
+            <Button variant="destructive">Loading </Button>
+          </div>
         </div>
-      </div>
+      </div> */}
+      <div>loading</div>
     </div>
   );
 }

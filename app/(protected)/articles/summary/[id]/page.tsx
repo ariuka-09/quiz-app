@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { NextResponse } from "next/server";
+import { Skeleton } from "@/components/ui/skeleton";
 import React, {
   ChangeEventHandler,
   ReactEventHandler,
@@ -18,10 +19,12 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
     summary: "",
     title: "",
   });
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     // window.location.reload();
+    setLoading(true);
     const getSummary = async () => {
       const data = await axiosInstance.get("/article");
       const summary = data.data.filter((article: any) => {
@@ -29,6 +32,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
       });
 
       setSummary({ summary: summary[0].summary, title: summary[0].title });
+      setLoading(false);
     };
     getSummary();
   }, []);
@@ -96,10 +100,17 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
             Summarized content
           </p>
         </div>
-        <div>
-          <p className="text-[24px] font-semibold">{summary.title} </p>
-          <p className="text-[14px] font-normal">{summary.summary} </p>
-        </div>
+        {loading ? (
+          <div className="flex flex-col gap-2">
+            <Skeleton className="h-6 w-250 " />
+            <Skeleton className="h-30 w-250 " />
+          </div>
+        ) : (
+          <div>
+            <p className="text-[24px] font-semibold">{summary.title} </p>
+            <p className="text-[14px] font-normal">{summary.summary} </p>
+          </div>
+        )}
       </div>
       <div className="flex justify-between">
         <Button variant="outline">See content</Button>
