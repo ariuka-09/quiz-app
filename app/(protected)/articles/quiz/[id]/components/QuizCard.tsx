@@ -31,7 +31,7 @@ export function QuizCard(props: {
             return (
               <Button
                 key={i}
-                className="w-full"
+                className="w-full "
                 variant="outline"
                 onClick={() => {
                   setQIndex((prev: string) => prev + 1);
