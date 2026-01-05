@@ -1,20 +1,45 @@
-import { SignedIn, UserButton } from "@clerk/nextjs";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import Link from "next/link";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 
 export const NavBar = () => {
   return (
-    <div className="h-14 flex justify-between w-full items-center  border-b fixed bg-white">
-      <p className="text-[24px] font-semibold ">Quiz app</p>
-      {/* <Avatar>
-        <AvatarImage
-          className="w-10 h-10 rounded-[50%] "
-          src="https://github.com/shadcn.png"
-        />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar> */}
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
-    </div>
+    // Outer wrapper: Handles background and border
+    <nav className="fixed top-0 w-full z-50 bg-white border-b border-slate-200">
+      {/* Inner Container: Constrains width and handles padding */}
+      <div className=" sm:px-6 h-16 flex items-center justify-between">
+        {/* Left: Branding */}
+        <Link href="/" className="hover:opacity-80 transition-opacity">
+          <p className="text-xl font-bold tracking-tight text-slate-900">
+            Quiz<span className="text-[#fabd32]">App</span>
+          </p>
+        </Link>
+
+        {/* Center/Right: Functional Navigation & Auth */}
+        <div className="flex items-center gap-6">
+          {/* Auth State Management */}
+          <div className="flex items-center gap-3">
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button variant="outline" size="sm" className="font-semibold">
+                  Нэвтрэх
+                </Button>
+              </SignInButton>
+            </SignedOut>
+
+            <SignedIn>
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: "h-9 w-9",
+                  },
+                }}
+              />
+            </SignedIn>
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 };

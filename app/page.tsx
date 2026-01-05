@@ -17,7 +17,10 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const [employees, setEmployees] = useState([]);
   const router = useRouter();
-  router.push("/sign-in");
+  useEffect(() => {
+    router.push("/sign-in");
+  }, []);
+
   // const getEmployees = async () => {
   //   try {
   //     const employees = await axiosInstance.get("/api/employees");
@@ -34,7 +37,7 @@ export default function Home() {
     <div className="flex justify-center items-center h-screen">
       <SignedOut>
         <SignIn />
-        <SignUp />
+        {/* <SignUp /> */}
       </SignedOut>
       {/* <SignedIn>
         <UserButton />
