@@ -16,7 +16,7 @@ export default function Home() {
   // 2. Add the isLoading state
   const [isLoading, setIsLoading] = useState(false);
 
-  const { isLoaded, isSignedIn, userId } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {

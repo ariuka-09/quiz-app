@@ -1,13 +1,5 @@
 "use client";
-import {
-  SignedIn,
-  SignedOut,
-  SignIn,
-  SignInButton,
-  SignOutButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignedOut } from "@clerk/nextjs";
 import { SignUp } from "@clerk/nextjs";
 
 export default function Home() {
@@ -16,9 +8,6 @@ export default function Home() {
       <SignedOut>
         <SignUp />
       </SignedOut>
-      {/* <SignedIn>
-        <UserButton />
-      </SignedIn> */}
     </div>
   );
 }

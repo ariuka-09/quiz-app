@@ -1,8 +1,6 @@
 "use client";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SignedOut, SignIn, useAuth } from "@clerk/nextjs";
-import { SignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -18,9 +16,6 @@ export default function Home() {
       <SignedOut>
         <SignIn routing="hash" />
       </SignedOut>
-      {/* <SignedIn>
-        <UserButton />
-      </SignedIn> */}
     </div>
   );
 }
