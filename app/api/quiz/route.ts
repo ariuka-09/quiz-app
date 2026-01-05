@@ -1,10 +1,9 @@
-import { axiosInstance } from "@/app/lib/utils";
 import { GoogleGenAI } from "@google/genai";
 import { NextRequest } from "next/server";
 
 const ai = new GoogleGenAI({});
 export const POST = async (req: NextRequest) => {
-  const { title, content } = await req.json();
+  const { content } = await req.json();
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: `Generate 5 multiple choice questions based on this article: ${content}, keep the answers short. Return the response in this exact JSON format:

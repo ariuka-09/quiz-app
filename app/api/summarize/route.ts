@@ -1,4 +1,3 @@
-import { axiosInstance } from "@/app/lib/utils";
 import { GoogleGenAI } from "@google/genai";
 import { NextRequest } from "next/server";
 
