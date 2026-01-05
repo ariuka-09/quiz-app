@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import React, { use, useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { Sparkles, BookOpen } from "lucide-react";
+import { article, quiz } from "@/app/lib/type";
 
 export default function Home({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -24,7 +25,9 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
     const getSummary = async () => {
       try {
         const data = await axiosInstance.get("/article");
-        const filtered = data.data.find((article: any) => article.id == id);
+        const filtered = data.data.find(
+          (article: article) => (article.id as unknown as string) == id
+        );
 
         if (filtered) {
           setSummary({ summary: filtered.summary, title: filtered.title });
@@ -49,7 +52,7 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
 
       // Using Promise.all is faster than a for-loop for multiple API calls
       await Promise.all(
-        quizzes.map((quiz: any) =>
+        quizzes.map((quiz: quiz) =>
           axiosInstance.post("/quizCrud", {
             question: quiz.question,
             options: quiz.options,

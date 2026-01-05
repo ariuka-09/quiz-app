@@ -21,8 +21,8 @@ export const POST = async (req: NextRequest) => {
   const aiText = response?.text ?? "No response";
   console.log("quiz before cleaning", aiText);
 
-  let cleaned = aiText.replace(/^\`\`\`json\s*|\s*\`\`\`$/g, "");
-  let arr = JSON.parse(cleaned);
+  const cleaned = aiText.replace(/^\`\`\`json\s*|\s*\`\`\`$/g, "");
+  const arr = JSON.parse(cleaned);
 
   //   console.log("response", cleaned);
 
