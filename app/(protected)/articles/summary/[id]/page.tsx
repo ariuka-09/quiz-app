@@ -127,3 +127,4 @@ export default function Home({ params }: { params: Promise<{ id: string }> }) {
     </div>
   );
 }
+//for push
