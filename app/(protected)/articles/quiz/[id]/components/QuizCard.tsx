@@ -1,19 +1,24 @@
 "use client";
+import { quiz } from "@/app/lib/type";
 import { Button } from "@/components/ui/button";
 
+export interface Attempt {
+  givenAns: string;
+  quizId: number;
+}
 export function QuizCard(props: {
-  quiz: any;
-  setQIndex: any;
-  setCorrectCount: any;
-  qIndex: any;
-  setAttempt: any;
+  quiz: quiz;
+  setQIndex: React.Dispatch<React.SetStateAction<number>>;
+  setCorrectCount: React.Dispatch<React.SetStateAction<number>>;
+  qIndex: number;
+  setAttempt: React.Dispatch<React.SetStateAction<Attempt[]>>;
 }) {
   const { question, options, answer, id } = props.quiz;
   const { setQIndex, setCorrectCount, qIndex, setAttempt } = props;
   const ansCheck = (ans: string) => {
     if (ans == answer) {
       console.log("true");
-      setCorrectCount((prev: any) => prev + 1);
+      setCorrectCount((prev: number) => prev + 1);
     }
   };
   return (
@@ -34,18 +39,11 @@ export function QuizCard(props: {
                 className="w-full "
                 variant="outline"
                 onClick={() => {
-                  setQIndex((prev: string) => prev + 1);
+                  setQIndex((prev: number) => prev + 1);
                   ansCheck(String(i));
-                  setAttempt(
-                    (
-                      prev: {
-                        givenAns: string;
-                        quizId: number;
-                      }[]
-                    ) => {
-                      return [...prev, { givenAns: i, quizId: id }];
-                    }
-                  );
+                  setAttempt((prev: Attempt[]) => {
+                    return [...prev, { givenAns: String(i), quizId: id }];
+                  });
                 }}
               >
                 {option}

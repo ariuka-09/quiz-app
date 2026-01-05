@@ -2,14 +2,14 @@
 import { axiosInstance } from "@/app/lib/utils";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { QuizCard } from "./components/QuizCard";
+import { Attempt, QuizCard } from "./components/QuizCard";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home({ params }: { params: Promise<{ id: string }> }) {
   const [quizes, setQuizes] = useState([]);
   const [qIndex, setQIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
-  const [attempt, setAttempt] = useState([]);
+  const [attempt, setAttempt] = useState<Attempt[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [id, setId] = useState<string | undefined>();

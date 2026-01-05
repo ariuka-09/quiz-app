@@ -10,7 +10,7 @@ export default function Home() {
     if (isSignedIn && isLoaded) {
       router.push("/articles");
     }
-  }, [isLoaded]);
+  }, [isLoaded, isSignedIn]);
   return (
     <div className="flex justify-center items-center h-screen">
       <SignedOut>
